@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+require('dotenv').config();
+
 const allowedOrigins = ['http:localhost:3000']
 
 const app = express();
@@ -14,6 +16,6 @@ app.get("/firstApi", (req, res) => {
     res.send(["Mango", "Apple", "Orange", "Banana"]);
 })
 
-app.listen(4000, () => {
-    console.log(`Server is running on port 4000`)
+app.listen(process.env.PORT, () => {
+    console.log(`Server is running on port ${process.env.PORT}`)
 });

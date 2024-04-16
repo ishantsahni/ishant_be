@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
 })
 
 app.get("/firstApi", (req, res) => {
-    res.send(["Mango", "Apple", "Orange", "Banana"]);
+    res.send(["Mango", "Apple", "Orange", "Banana", "Grapes"]);
 })
 
 app.listen(process.env.PORT, () => {

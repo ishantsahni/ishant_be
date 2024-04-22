@@ -1,5 +1,6 @@
 const express = require('express');
-const connectDB = require('./db');
+const connectDB = require('./config/db');
+const MyModel = require('./models/myModel');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 require('dotenv').config();
@@ -23,7 +24,19 @@ app.get("/firstApi", (req, res) => {
 
 app.post('/postUserData', (req, res) => {
     console.log("req body of postUserData ", req.body);
-    res.send("Got user data successfully!!");
+    const newEntry = new MyModel({
+        name: req.body.name,
+        dish: req.body.dish,
+        color: req.body.color,
+        city: req.body.city
+    })
+
+    newEntry.save().then((result) => {
+        console.log("entry added successfully");
+        res.send("Got user data successfully!!");
+    }).catch((error) => {
+        console.log('Error saving data: ', error);
+    })
 })
 
 app.listen(process.env.PORT, () => {

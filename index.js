@@ -1,4 +1,5 @@
 const express = require('express');
+const connectDB = require('./db');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 require('dotenv').config();
@@ -9,6 +10,8 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+
+connectDB();
 
 app.get('/', (req, res) => {
     res.send('Data coming from backend data!');

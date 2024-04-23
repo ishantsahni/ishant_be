@@ -1,6 +1,7 @@
 const express = require('express');
 const connectDB = require('./config/db');
 const MyModel = require('./models/myModel');
+const ProductModel = require('./models/productModel');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 require('dotenv').config();
@@ -37,6 +38,21 @@ app.post('/postUserData', (req, res) => {
     }).catch((error) => {
         console.log('Error saving data: ', error);
     })
+})
+
+app.post('/addProducts', (req, res) => {
+    const newProduct = new ProductModel({
+        productId: req.body.productId,
+        productName: req.body.productName,
+        productPrice: req.body.productPrice
+    })
+
+    newProduct.save().then((res) => {
+        console.log("New product successfully added");
+    }).catch(err => {
+        console.log("Error occured while adding new product: ", err);
+    })
+
 })
 
 app.listen(process.env.PORT, () => {

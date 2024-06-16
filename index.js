@@ -1,4 +1,5 @@
 const express = require('express');
+const connectDB = require('./db');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 require('dotenv').config();
@@ -6,6 +7,9 @@ require('dotenv').config();
 const allowedOrigins = ['http:localhost:3000']
 
 const app = express();
+
+// Connect to MongoDB
+connectDB();
 
 app.use(cors());
 app.use(bodyParser.json());

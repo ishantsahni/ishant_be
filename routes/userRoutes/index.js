@@ -15,3 +15,25 @@ router.get("/getUserData", async (req, res) => {
 })
 
 // POST end point to save user data
+router.post("/postUserData", async (req, res) => {
+    try {
+        const { firstName, lastName, age, email } = req.body;
+        const userData = {
+            firstName: firstName,
+            lastName: lastName,
+            age: age,
+            email: email
+        }
+        const newUserData = new userModel(userData);
+        const saveUserData = await new userModel(newUserData).save();
+        if (saveUserData) {
+            res.status(200).send("User data saved successfully!")
+        }
+        res.end();
+    } catch (error) {
+        console.log("Error saving user data !!", error.message);
+        res.status(500).send("Unable to save data");
+    }
+})
+
+module.exports = router;

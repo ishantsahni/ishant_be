@@ -24,7 +24,7 @@ app.get("/firstApi", (req, res) => {
     res.send(["Mango", "Apple", "Orange", "Banana", "Grapes"]);
 })
 
-app.use("/", userRoutes);
+app.use("/user", userRoutes);
 
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`)

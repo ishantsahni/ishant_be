@@ -1,7 +1,7 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 
-const mongoURI = 'mongodb+srv://ishant:Aventador%231@ishantcluster.fuipkbz.mongodb.net/?retryWrites=true&w=majority&appName=ishantCluster';
+const mongoURI = 'mongodb+srv://ishant:Aventador%231@ishantcluster.fuipkbz.mongodb.net/ishantDatabase?retryWrites=true&w=majority&appName=ishantCluster';
 
 const connectDB = async () => {
     console.log("came here");

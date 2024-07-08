@@ -32,7 +32,10 @@ router.post("/postUserData", async (req, res) => {
         res.end();
     } catch (error) {
         console.log("Error saving user data !!", error.message);
-        res.status(500).send("Unable to save data");
+        res.status(500).send({
+            error: true,
+            message: error.message
+        });
     }
 })
 

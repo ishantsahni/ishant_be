@@ -13,17 +13,6 @@ const app = express();
 // Connect to MongoDB
 connectDB();
 
-// Define a schema
-// const basicUserInfoSchema = new mongoose.Schema({
-//     firstName: { type: String, required: true },
-//     lastName: { type: String, required: true },
-//     age: { type: Number, required: true, min: 0 },
-//     email: { type: String, required: true, match: /^.+@.+\..+$/ }
-// }, { collection: 'basicUserInfo' });
-
-// Create a model
-// const BasicUserInfo = mongoose.model('BasicUserInfo', basicUserInfoSchema);
-
 app.use(cors());
 app.use(bodyParser.json());
 

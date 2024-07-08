@@ -2,7 +2,7 @@ const express = require('express');
 const connectDB = require('./db');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const schemas = require('./models/schemas');
+const userModel = require('./models/userSchema');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
@@ -40,7 +40,7 @@ app.post('/postUserData', async (req, res) => {
         const { firstName, lastName, age, email } = req.body;
         const userData = { firstName: firstName, lastName: lastName, age: age, email: email };
         console.log("user data ", userData);
-        const newUserData = new schemas.Users(userData);
+        const newUserData = new userModel(userData);
         const saveUserData = await newUserData.save();
         if (saveUserData) {
             console.log(
@@ -60,7 +60,7 @@ app.post('/postUserData', async (req, res) => {
 // GET endpoint to fetch all user data
 app.get('/getUserData', async (req, res) => {
     try {
-        const userData = await schemas.Users.find();
+        const userData = await userModel.find();
         console.log("fetched user data ", userData);
         res.json(userData);
     } catch (error) {

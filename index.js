@@ -2,8 +2,7 @@ const express = require('express');
 const connectDB = require('./db');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const userModel = require('./models/userSchema');
-const mongoose = require('mongoose');
+const userModel = require('./models/userModel');
 require('dotenv').config();
 
 const allowedOrigins = ['http:localhost:3000']

@@ -4,6 +4,8 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 // const userModel = require('./models/userModel');
 const userRoutes = require('./routes/userRoutes');
+const userShoppingDetailsRoute = require('./routes/userShoppingDetailsRoutes');
+const UserShoppingDetailsModel = require('./models/userShoppingDetailsModel');
 require('dotenv').config();
 
 const allowedOrigins = ['http:localhost:3000']
@@ -25,6 +27,8 @@ app.get("/firstApi", (req, res) => {
 })
 
 app.use("/user", userRoutes);
+
+app.use("/", userShoppingDetailsRoute);
 
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`)

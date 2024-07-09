@@ -21,6 +21,6 @@ const userShoppingDetailsSchema = new schema({
     }
 })
 
-const UserShoppingDetailsModel = mongoose.model(UserShoppingDetailsModel, userShoppingDetailsSchema, userShoppingDetails);
+const UserShoppingDetailsModel = mongoose.model('UserShoppingDetailsModel', userShoppingDetailsSchema, 'userShoppingDetails');
 
 module.exports = UserShoppingDetailsModel;

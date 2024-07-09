@@ -22,6 +22,16 @@ router.post("/postUserShoppingDetails", async (req, res) => {
     } catch (error) {
         console.log("Error in saving information!!");
     }
+});
+
+router.get("/getUserShoppingDetails", async (req, res) => {
+    try {
+        const userShoppingDetailsData = await UserShoppingDetailsModel.find();
+        res.status(200).json(userShoppingDetailsData);
+    } catch (error) {
+        console.log("Error in fetching user shopping details ", error);
+        res.status(500).send("Unable to fetch user shopping details");
+    }
 })
 
 module.exports = router;

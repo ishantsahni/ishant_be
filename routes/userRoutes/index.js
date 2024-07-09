@@ -6,7 +6,11 @@ const router = express.Router();
 // GET end point to fetch all user data
 router.get("/getUserData", async (req, res) => {
     try {
-        const userData = await userModel.find();
+        const { email } = req.query;
+        console.log("email value ", email);
+        const userData = await userModel.find({
+            email
+        });
         res.json(userData);
     } catch (error) {
         console.error("Error fetching user data ", error);

@@ -43,6 +43,14 @@ app.use("/user", userRoutes);
 
 app.use("/", userShoppingDetailsRoute);
 
+// Upload endpoint
+app.use("/upload", upload.single('file'), (req, res) => {
+    res.send({
+        message: 'File uploaded successfully!',
+        file: req.file
+    })
+})
+
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`)
 });

@@ -44,6 +44,8 @@ const startServer = async () => {
         }
     })
 
+    // Below code is for storing file in the backend server
+
     // Create the uploads directory if it doesn't exist
     // const uploadDir = path.join(__dirname, 'uploads');
     // if (!fs.existsSync(uploadDir)) {

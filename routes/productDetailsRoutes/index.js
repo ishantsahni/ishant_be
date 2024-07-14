@@ -9,8 +9,9 @@ router.get('/getProductDetails', async (req, res) => {
     try {
         const { name } = req.body;
         const getUserDetails = await userModel.find({
-            name
+            firstName: name
         });
+        console.log("get user details data ", getUserDetails);
         const { email } = getUserDetails;
         const getProductDetails = await UserShoppingDetailsModel.find({
             email

@@ -7,12 +7,14 @@ const router = express.Router();
 
 router.get('/getProductDetails', async (req, res) => {
     try {
-        const { name } = req.body;
+        const { name } = req.query;
+        console.log("name ", name);
         const getUserDetails = await userModel.find({
             firstName: name
         });
         console.log("get user details data ", getUserDetails);
-        const { email } = getUserDetails;
+        const { email } = getUserDetails[0];
+        console.log("email ", email);
         const getProductDetails = await UserShoppingDetailsModel.find({
             email
         });

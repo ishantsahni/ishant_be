@@ -10,6 +10,7 @@ const fs = require('fs');
 // const userModel = require('./models/userModel');
 const userRoutes = require('./routes/userRoutes');
 const userShoppingDetailsRoute = require('./routes/userShoppingDetailsRoutes');
+const productDetailsRoutes = require('./routes/productDetailsRoutes');
 const UserShoppingDetailsModel = require('./models/userShoppingDetailsModel');
 require('dotenv').config();
 
@@ -78,6 +79,8 @@ const startServer = async () => {
     app.use("/user", userRoutes);
 
     app.use("/", userShoppingDetailsRoute);
+
+    app.use("/", productDetailsRoutes)
 
     // Upload endpoint
     app.use("/upload", upload.single('file'), (req, res) => {

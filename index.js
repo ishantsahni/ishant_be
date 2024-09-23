@@ -34,7 +34,7 @@ const startServer = async () => {
 
     // Create storage engine
     const storage = new GridFsStorage({
-        url: 'mongodb+srv://ishant:Aventador%231@ishantcluster.fuipkbz.mongodb.net/ishantDatabase?retryWrites=true&w=majority&appName=ishantCluster',
+        url: 'mongodb+srv://ishantsahni888:P5nPAqPC7rfhVMeE@ecommercecluster.asix2.mongodb.net/?retryWrites=true&w=majority&appName=eCommerceCluster',
         file: (req, file) => {
             return new Promise((resolve, reject) => {
                 const filename = file.fieldname + '-' + Date.now() + path.extname(file.originalname);

@@ -14,6 +14,8 @@ const productDetailsRoutes = require('./routes/productDetailsRoutes');
 const UserShoppingDetailsModel = require('./models/userShoppingDetailsModel');
 require('dotenv').config();
 
+mongoose.set('strictQuery', true);
+
 const allowedOrigins = ['http:localhost:3001']
 
 const app = express();

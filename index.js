@@ -1,9 +1,11 @@
 const express = require('express');
 const connectDB = require('./db');
+const s3 = require('./awss3');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const multer = require('multer');
+const multerS3 = require('multer-s3');
 const { GridFsStorage } = require('multer-gridfs-storage');
 const path = require('path');
 const fs = require('fs');
@@ -24,28 +26,42 @@ const app = express();
 const startServer = async () => {
     await connectDB();
 
-    let gfs;
-    const conn = mongoose.connection;
-    conn.once('open', () => {
-        gfs = new mongoose.mongo.GridFsBucket(connectDB.db, {
-            bucketName: 'uploads'
-        })
-    })
+    const upload = multer({
+        storage: multerS3({
+            s3: s3,
+            bucket: process.env.S3_BUCKET_NAME,
+            metadata: (req, file, cb) => {
+                cb(null, { fieldName: file.fieldname });
+            },
+            key: (req, file, cb) => {
+                const fileName = `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`;
+                cb(null, fileName); // Save file with a timestamp to avoid name collisions
+            },
+        }),
+    });
+
+    // let gfs;
+    // const conn = mongoose.connection;
+    // conn.once('open', () => {
+    //     gfs = new mongoose.mongo.GridFsBucket(connectDB.db, {
+    //         bucketName: 'uploads'
+    //     })
+    // })
 
     // Create storage engine
-    const storage = new GridFsStorage({
-        url: 'mongodb+srv://ishantsahni888:P5nPAqPC7rfhVMeE@ecommercecluster.asix2.mongodb.net/?retryWrites=true&w=majority&appName=eCommerceCluster',
-        file: (req, file) => {
-            return new Promise((resolve, reject) => {
-                const filename = file.fieldname + '-' + Date.now() + path.extname(file.originalname);
-                const fileInfo = {
-                    filename: filename,
-                    bucketname: 'uploads'
-                };
-                resolve(fileInfo);
-            })
-        }
-    })
+    // const storage = new GridFsStorage({
+    //     url: 'mongodb+srv://ishantsahni888:P5nPAqPC7rfhVMeE@ecommercecluster.asix2.mongodb.net/?retryWrites=true&w=majority&appName=eCommerceCluster',
+    //     file: (req, file) => {
+    //         return new Promise((resolve, reject) => {
+    //             const filename = file.fieldname + '-' + Date.now() + path.extname(file.originalname);
+    //             const fileInfo = {
+    //                 filename: filename,
+    //                 bucketname: 'uploads'
+    //             };
+    //             resolve(fileInfo);
+    //         })
+    //     }
+    // })
 
     // Below code is for storing file in the backend server
 
@@ -65,7 +81,7 @@ const startServer = async () => {
     //     }
     // })
 
-    const upload = multer({ storage: storage })
+    // const upload = multer({ storage: storage })
 
     app.use(cors());
     app.use(bodyParser.json());
@@ -86,9 +102,15 @@ const startServer = async () => {
 
     // Upload endpoint
     app.use("/upload", upload.single('file'), (req, res) => {
+        if (!req.file) {
+            return res.status(400).send({
+                message: "No file uploaded!"
+            })
+        }
+
         res.send({
             message: 'File uploaded successfully!',
-            file: req.file
+            fileUrl: req.file.location
         })
     })
 

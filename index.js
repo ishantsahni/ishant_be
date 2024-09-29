@@ -40,49 +40,6 @@ const startServer = async () => {
         }),
     });
 
-    // let gfs;
-    // const conn = mongoose.connection;
-    // conn.once('open', () => {
-    //     gfs = new mongoose.mongo.GridFsBucket(connectDB.db, {
-    //         bucketName: 'uploads'
-    //     })
-    // })
-
-    // Create storage engine
-    // const storage = new GridFsStorage({
-    //     url: 'mongodb+srv://ishantsahni888:P5nPAqPC7rfhVMeE@ecommercecluster.asix2.mongodb.net/?retryWrites=true&w=majority&appName=eCommerceCluster',
-    //     file: (req, file) => {
-    //         return new Promise((resolve, reject) => {
-    //             const filename = file.fieldname + '-' + Date.now() + path.extname(file.originalname);
-    //             const fileInfo = {
-    //                 filename: filename,
-    //                 bucketname: 'uploads'
-    //             };
-    //             resolve(fileInfo);
-    //         })
-    //     }
-    // })
-
-    // Below code is for storing file in the backend server
-
-    // Create the uploads directory if it doesn't exist
-    // const uploadDir = path.join(__dirname, 'uploads');
-    // if (!fs.existsSync(uploadDir)) {
-    //     fs.mkdirSync(uploadDir, { recursive: true }); // Ensure the directory is created recursively
-    // }
-
-    // Define storage for multer
-    // const storage = multer.diskStorage({
-    //     destination: function (req, file, cb) {
-    //         cb(null, uploadDir);
-    //     },
-    //     filename: function (req, file, cb) {
-    //         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
-    //     }
-    // })
-
-    // const upload = multer({ storage: storage })
-
     app.use(cors());
     app.use(bodyParser.json());
 

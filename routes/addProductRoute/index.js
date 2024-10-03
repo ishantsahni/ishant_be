@@ -3,7 +3,7 @@ const productModel = require("../../models/productModel");
 
 const router = express.Router();
 
-router.post("/postProductData", async (req, res) => {
+router.post("/addProduct", async (req, res) => {
     try {
         const { productName, description, price, category, brand, stock, images } = req.body;
         const productData = {
@@ -15,7 +15,7 @@ router.post("/postProductData", async (req, res) => {
             stock: stock,
             images: images
         }
-        const newProductData = new productModel(productModel);
+        const newProductData = new productModel(productData);
         const saveProductData = await newProductData.save();
         if (saveProductData) {
             res.status(200).send("Product Data saved successfully!");

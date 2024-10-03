@@ -12,7 +12,7 @@ const fs = require('fs');
 const userRoutes = require('./routes/userRoutes');
 const userShoppingDetailsRoute = require('./routes/userShoppingDetailsRoutes');
 const productDetailsRoutes = require('./routes/productDetailsRoutes');
-const addProductRoute = require("./routes/addProductRoute");
+const productRoute = require("./routes/productRoute");
 require('dotenv').config();
 
 mongoose.set('strictQuery', true);
@@ -56,7 +56,7 @@ const startServer = async () => {
 
     app.use("/", productDetailsRoutes);
 
-    app.use("/", addProductRoute);
+    app.use("/", productRoute);
 
     // Upload endpoint
     app.use("/upload", upload.single('file'), (req, res) => {

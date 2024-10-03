@@ -28,4 +28,18 @@ router.post("/addProduct", async (req, res) => {
     }
 });
 
+router.get("/getProducts", async (req, res) => {
+    try {
+        const allProducts = await productModel.find();
+        if (allProducts) {
+            res.status(200).send(allProducts);
+        }
+    } catch (error) {
+        res.status(500).send({
+            error: true,
+            message: error.message
+        })
+    }
+})
+
 module.exports = router;

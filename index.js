@@ -6,14 +6,13 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
-const { GridFsStorage } = require('multer-gridfs-storage');
 const path = require('path');
 const fs = require('fs');
 // const userModel = require('./models/userModel');
 const userRoutes = require('./routes/userRoutes');
 const userShoppingDetailsRoute = require('./routes/userShoppingDetailsRoutes');
 const productDetailsRoutes = require('./routes/productDetailsRoutes');
-const UserShoppingDetailsModel = require('./models/userShoppingDetailsModel');
+const addProductRoute = require("./routes/addProductRoute");
 require('dotenv').config();
 
 mongoose.set('strictQuery', true);
@@ -55,7 +54,9 @@ const startServer = async () => {
 
     app.use("/", userShoppingDetailsRoute);
 
-    app.use("/", productDetailsRoutes)
+    app.use("/", productDetailsRoutes);
+
+    app.use("/", addProductRoute);
 
     // Upload endpoint
     app.use("/upload", upload.single('file'), (req, res) => {

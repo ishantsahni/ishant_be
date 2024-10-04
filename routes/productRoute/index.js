@@ -44,8 +44,10 @@ router.get("/getProducts", async (req, res) => {
 
 router.get("/getProduct/:id", async (req, res) => {
     try {
-        const productId = req.query.id;
-        const product = await productModel.find(productId);
+        const productId = req.params.id;
+        const product = await productModel.findById({
+            _id: productId
+        });
 
         if (product) {
             res.status(200).send(product);

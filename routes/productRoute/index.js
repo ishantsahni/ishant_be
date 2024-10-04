@@ -42,4 +42,23 @@ router.get("/getProducts", async (req, res) => {
     }
 })
 
+router.get("/getProduct/:id", async (req, res) => {
+    try {
+        const productId = req.query.id;
+        const product = await productModel.find(productId);
+
+        if (product) {
+            res.status(200).send(product);
+        } else {
+            res.status(404).send("Product not found!");
+        }
+
+    } catch (error) {
+        res.status(500).send({
+            error: true,
+            message: error.message
+        })
+    }
+})
+
 module.exports = router;

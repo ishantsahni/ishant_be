@@ -8,7 +8,6 @@ const multer = require('multer');
 const multerS3 = require('multer-s3');
 const path = require('path');
 const userRoutes = require('./routes/userRoutes');
-const productDetailsRoutes = require('./routes/productDetailsRoutes');
 const productRoute = require("./routes/productRoute");
 require('dotenv').config();
 
@@ -40,8 +39,6 @@ const startServer = async () => {
     app.use(bodyParser.json());
 
     app.use("/user", userRoutes);
-
-    app.use("/", productDetailsRoutes);
 
     app.use("/", productRoute);
 

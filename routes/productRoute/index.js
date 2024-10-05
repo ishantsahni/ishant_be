@@ -1,5 +1,5 @@
 const express = require("express");
-const productModel = require("../../models/productModel");
+const Product = require("../../models/Product");
 
 const router = express.Router();
 
@@ -15,7 +15,7 @@ router.post("/addProduct", async (req, res) => {
             stock: stock,
             images: images
         }
-        const newProductData = new productModel(productData);
+        const newProductData = new Product(productData);
         const saveProductData = await newProductData.save();
         if (saveProductData) {
             res.status(200).send("Product Data saved successfully!");
@@ -30,7 +30,7 @@ router.post("/addProduct", async (req, res) => {
 
 router.get("/getProducts", async (req, res) => {
     try {
-        const allProducts = await productModel.find();
+        const allProducts = await Product.find();
         if (allProducts) {
             res.status(200).send(allProducts);
         }
@@ -45,7 +45,7 @@ router.get("/getProducts", async (req, res) => {
 router.get("/getProduct/:id", async (req, res) => {
     try {
         const productId = req.params.id;
-        const product = await productModel.findById({
+        const product = await Product.findById({
             _id: productId
         });
 

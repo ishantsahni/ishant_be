@@ -7,10 +7,7 @@ const bodyParser = require('body-parser');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 const path = require('path');
-const fs = require('fs');
-// const userModel = require('./models/userModel');
 const userRoutes = require('./routes/userRoutes');
-const userShoppingDetailsRoute = require('./routes/userShoppingDetailsRoutes');
 const productDetailsRoutes = require('./routes/productDetailsRoutes');
 const productRoute = require("./routes/productRoute");
 require('dotenv').config();
@@ -42,17 +39,7 @@ const startServer = async () => {
     app.use(cors());
     app.use(bodyParser.json());
 
-    app.get('/', (req, res) => {
-        res.send('Data coming from backend data!');
-    })
-
-    app.get("/firstApi", (req, res) => {
-        res.send(["Mango", "Apple", "Orange", "Banana", "Grapes"]);
-    })
-
     app.use("/user", userRoutes);
-
-    app.use("/", userShoppingDetailsRoute);
 
     app.use("/", productDetailsRoutes);
 

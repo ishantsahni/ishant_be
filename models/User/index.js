@@ -36,8 +36,9 @@ const userSchema = new Schema({
             type: String,
             required: true
         }
-    }
-})
+    },
+    orders: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Order' }]
+}, { timestamps: true });
 
 const User = mongoose.model('User', userSchema, 'users');
 

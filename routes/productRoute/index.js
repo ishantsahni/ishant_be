@@ -5,15 +5,15 @@ const router = express.Router();
 
 router.post("/addProduct", async (req, res) => {
     try {
-        const { productName, description, price, category, brand, stock, images } = req.body;
+        const { name, description, price, category, brand, stock, image } = req.body;
         const productData = {
-            productName: productName,
+            name: name,
             description: description,
             price: price,
             category: category,
             brand: brand,
             stock: stock,
-            images: images
+            image: image
         }
         const newProductData = new Product(productData);
         const saveProductData = await newProductData.save();

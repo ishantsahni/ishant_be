@@ -27,10 +27,17 @@ const productSchema = new Schema({
         type: Number,
         required: true
     },
-    images: {
+    image: {
         type: String,
         required: true
-    }
-})
+    },
+    reviews: [
+        {
+            user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+            comment: { type: String },
+            rating: { type: Number }
+        }
+    ]
+}, { timestamps: true })
 
 module.exports = mongoose.model("Product", productSchema, "products");

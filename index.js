@@ -37,10 +37,6 @@ const startServer = async () => {
     app.use(cors());
     app.use(bodyParser.json());
 
-    app.use("/", (req, res) => {
-        res.send("Welcome to the backend server!");
-    })
-
     app.use("/product", productRoute);
 
     // Upload endpoint
@@ -55,6 +51,10 @@ const startServer = async () => {
             message: 'File uploaded successfully!',
             fileUrl: req.file.location
         })
+    })
+
+    app.use("/", (req, res) => {
+        res.send("Welcome to the backend server!");
     })
 
     app.listen(process.env.PORT, () => {

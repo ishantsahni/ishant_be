@@ -37,6 +37,8 @@ const startServer = async () => {
     app.use(cors());
     app.use(bodyParser.json());
 
+    app.use("/signup", singupRoute);
+
     app.use("/product", productRoute);
 
     // Upload endpoint

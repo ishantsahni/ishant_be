@@ -1,5 +1,6 @@
 const express = require('express');
 const bycrypt = require('bycryptjs');
+const jwt = require('jsonwebtoken');
 const User = require("../../models/User");
 
 const router = express.Router();
@@ -35,10 +36,23 @@ router.post("/signup", async (req, res) => {
         // Save user
         await user.save();
 
+        // Generate JWT token
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
+            expiresIn: '1h'
+        })
 
+        res.status(201).json({
+            message: 'User registered successfully!',
+            token,
+            user: {
+                _id: user._id,
+                name: user.name,
+                email: user.email
+            }
+        })
 
     } catch (error) {
-
+        res.status(500).json({ message: 'Server error' });
     }
 
 })

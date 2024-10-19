@@ -37,13 +37,13 @@ router.post("/", async (req, res) => {
         await user.save();
 
         // Generate JWT token
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
+        const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
             expiresIn: '1h'
         })
 
         res.status(201).json({
             message: 'User registered successfully!',
-            token,
+            accessToken,
             user: {
                 _id: user._id,
                 name: user.name,

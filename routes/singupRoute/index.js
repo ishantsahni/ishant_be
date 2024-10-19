@@ -18,7 +18,7 @@ router.post("/signUp", async (req, res) => {
 
         // Hash the password
         const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bycrypt.hash(password, salt);
+        const hashedPassword = await bcrypt.hash(password, salt);
 
         // Create user
         const user = new User({
@@ -70,7 +70,7 @@ router.post('/signIn', async (req, res) => {
         }
 
         // Compare password
-        const isMatch = await bycrypt.compare(password, user.password);
+        const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             res.status(400).json({ message: 'Invalid password!' });
         }

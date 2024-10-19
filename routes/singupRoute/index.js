@@ -6,7 +6,7 @@ const User = require("../../models/User");
 const router = express.Router();
 
 // User Registration(Sing-up)
-router.post("/signUp", async (req, res) => {
+router.post("/", async (req, res) => {
     const { name, email, password, address, city, postalCode, country } = req.body;
 
     try {

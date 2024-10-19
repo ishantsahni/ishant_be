@@ -9,6 +9,7 @@ const multerS3 = require('multer-s3');
 const path = require('path');
 const productRoute = require("./routes/productRoute");
 const signUpRoute = require('./routes/singUpRoute');
+const signInRoute = require('./routes/signInRoute');
 require('dotenv').config();
 
 mongoose.set('strictQuery', true);
@@ -39,6 +40,8 @@ const startServer = async () => {
     app.use(bodyParser.json());
 
     app.use("/signUp", signUpRoute);
+
+    app.use("/signIn", signInRoute);
 
     app.use("/product", productRoute);
 

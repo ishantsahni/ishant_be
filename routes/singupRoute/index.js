@@ -1,12 +1,12 @@
 const express = require('express');
-const bycrypt = require('bycryptjs');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require("../../models/User");
 
 const router = express.Router();
 
 // User Registration(Sing-up)
-router.post("/signup", async (req, res) => {
+router.post("/signUp", async (req, res) => {
     const { name, email, password, address, city, postalCode, country } = req.body;
 
     try {
@@ -17,7 +17,7 @@ router.post("/signup", async (req, res) => {
         }
 
         // Hash the password
-        const salt = await bycrypt.genSalt(10);
+        const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bycrypt.hash(password, salt);
 
         // Create user
@@ -58,7 +58,7 @@ router.post("/signup", async (req, res) => {
 })
 
 // User login
-router.post('/login', async (req, res) => {
+router.post('/signIn', async (req, res) => {
 
     const { email, password } = req.body;
 

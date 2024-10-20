@@ -11,7 +11,7 @@ const sendSignUpEmail = (email, name) => {
         to: email,  // Recipient's email
         from: process.env.FROM_EMAIL,
         subject: 'Welcome to our Ecomm Applicaiton!',
-        message: `Hi ${name},\n\nThank you for signing up! We are excited to have you onboard.\n\nBest regards,\nYour Ecomm Team`
+        text: `Hi ${name},\n\nThank you for signing up! We are excited to have you onboard.\n\nBest regards,\nYour Ecomm Team`, // Plain text body
     }
 
     sgMail.send(msg)

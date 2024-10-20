@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require("../../models/User");
+const { sendSignUpEmail } = require('../../utils/emailService');
 
 const router = express.Router();
 
@@ -35,6 +36,9 @@ router.post("/", async (req, res) => {
 
         // Save user
         await user.save();
+
+        // Send the sign up email
+        sendSignUpEmail(user.email, user.name);
 
         // Generate JWT token
         const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {

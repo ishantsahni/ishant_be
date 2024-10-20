@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const connectDB = require('./db');
 const s3 = require('./awss3');
@@ -10,7 +12,6 @@ const path = require('path');
 const productRoute = require("./routes/productRoute");
 const signUpRoute = require('./routes/singUpRoute');
 const signInRoute = require('./routes/signInRoute');
-require('dotenv').config();
 
 mongoose.set('strictQuery', true);
 

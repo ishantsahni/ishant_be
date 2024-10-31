@@ -47,7 +47,7 @@ router.post("/getProducts", async (req, res) => {
     }
 
     if (search) {
-      query.search = { $regex: search, $options: "i" }; // Case-insensitive search
+      query.description = { $regex: search, $options: "i" }; // Case-insensitive search
     }
 
     const allProducts = await Product.find(query);

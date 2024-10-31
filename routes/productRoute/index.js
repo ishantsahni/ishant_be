@@ -31,7 +31,26 @@ router.post("/add", async (req, res) => {
 
 router.post("/getProducts", async (req, res) => {
   try {
-    const allProducts = await Product.find();
+    // Extract filter from the request body
+    const { category, price, search } = req.body;
+
+    // Build the query object dynamically based on provided filters
+    let query = {};
+
+    if (category) {
+      query.category = category;
+    }
+
+    if (price) {
+      query.price = { $lte: price }; // Product with price <= specified price
+    }
+
+    if (search) {
+      query.search = { $regex: search, $options: i }; // Case-insensitive search
+    }
+
+    const allProducts = await Product.find(query);
+
     if (allProducts) {
       res.status(200).send(allProducts);
     }

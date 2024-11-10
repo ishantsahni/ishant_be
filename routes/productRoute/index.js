@@ -97,4 +97,40 @@ router.get("/get/:id", async (req, res) => {
   }
 });
 
+router.post("/getProductsById", (req, res) => {
+  try {
+    // Extract the array of product IDs from the array
+    const { productIds } = req.body;
+
+    if (!productIds || !Array.isArray(productIds) || productIds.length === 0) {
+      res.status(400).send({
+        error: true,
+        message: "Invalid or empty productIds array",
+      });
+    }
+
+    // Find products whose _id matches with any of the provided productIds
+    const products = Product.find({
+      _id: { $in: productIds },
+    });
+
+    if (products.length > 0) {
+      const modifiedProducts = products.map((product) => {
+        const productObj = product.toObject();
+        productObj.productId = productObj._id;
+        delete productObj._id;
+        return productObj;
+      });
+      res.status(200).send(modifiedProducts);
+    } else {
+      res.status(400).send("No products found for the given IDs");
+    }
+  } catch (error) {
+    res.status(500).send({
+      error: true,
+      message: error.message,
+    });
+  }
+});
+
 module.exports = router;

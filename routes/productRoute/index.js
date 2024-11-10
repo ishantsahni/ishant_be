@@ -58,7 +58,13 @@ router.post("/getProducts", async (req, res) => {
     const allProducts = await Product.find(query);
 
     if (allProducts) {
-      res.status(200).send(allProducts);
+      const modifiedProducts = allProducts.map((product) => {
+        const productObj = product.toObject();
+        productObj.productId = productObj._id;
+        delete productObj._id;
+        return productObj;
+      });
+      res.status(200).send(modifiedProducts);
     }
   } catch (error) {
     res.status(500).send({

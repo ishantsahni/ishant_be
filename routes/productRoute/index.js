@@ -82,7 +82,10 @@ router.get("/get/:id", async (req, res) => {
     });
 
     if (product) {
-      res.status(200).send(product);
+      const modifiedProduct = product.toObject();
+      modifiedProduct.productId = modifiedProduct._id;
+      delete modifiedProduct._id;
+      res.status(200).send(modifiedProduct);
     } else {
       res.status(404).send("Product not found!");
     }

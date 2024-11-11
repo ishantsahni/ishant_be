@@ -97,7 +97,7 @@ router.get("/get/:id", async (req, res) => {
   }
 });
 
-router.post("/getProductsById", (req, res) => {
+router.post("/getProductsById", async (req, res) => {
   try {
     // Extract the array of product IDs from the array
     const { productIds } = req.body;
@@ -110,7 +110,7 @@ router.post("/getProductsById", (req, res) => {
     }
 
     // Find products whose _id matches with any of the provided productIds
-    const products = Product.find({
+    const products = await Product.find({
       _id: { $in: productIds },
     });
 

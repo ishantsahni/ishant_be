@@ -11,7 +11,7 @@ router.post("/add", async (req, res) => {
     // Extract userId from the bearer token
     const token = req.headers.authorization.split(" ")[1];
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    const userId = decodeToken.userId;
+    const userId = decodedToken.userId;
 
     const { orderDetails } = req.body;
 

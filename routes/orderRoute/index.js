@@ -89,4 +89,23 @@ router.post("/add", async (req, res) => {
   }
 });
 
+router.get("/", async (req, res) => {
+  try {
+    // Extract userId from the bearer token
+    const token = req.headers.authorization.split(" ")[1];
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    const userId = decodedToken.userId;
+
+    const allOrders = await Order.find({
+      user: userId,
+    });
+    res.status(200).send(allOrders);
+  } catch (error) {
+    res.status(500).send({
+      error: true,
+      message: error.message,
+    });
+  }
+});
+
 module.exports = router;

@@ -111,7 +111,10 @@ router.get("/", async (req, res) => {
     // Create a map for quick loop of product details
     const productMap = {};
     products.forEach((product) => {
-      productMap[product._id] = product.toObject();
+      const productObj = product.toObject();
+      productObj.productId = productObj._id;
+      delete productObj._id;
+      productMap[productObj.productId] = productObj;
     });
 
     // Attach product details to each order's orderItems

@@ -99,7 +99,35 @@ router.get("/", async (req, res) => {
     const allOrders = await Order.find({
       user: userId,
     });
-    res.status(200).send(allOrders);
+
+    // Extract all productIds from the orders
+    const productIds = allOrders
+      .map((order) => order.orderItems.map((item) => item.product))
+      .flat();
+
+    // Fetch all product details for the extracted productIds
+    const products = await Product.find({ _id: { $in: productIds } });
+
+    // Create a map for quick loop of product details
+    const productMap = {};
+    products.forEach((product) => {
+      productMap[product._id] = product.toObject();
+    });
+
+    // Attach product details to each order's orderItems
+    const ordersWithProductDetails = allOrders.map((order) => {
+      const updatedOrderItems = order.orderItems.map((item) => ({
+        ...item.toObject(),
+        productDetails: productMap[item.product] || null,
+      }));
+
+      return {
+        ...order.toObject(),
+        orderItems: updatedOrderItems,
+      };
+    });
+
+    res.status(200).send(ordersWithProductDetails);
   } catch (error) {
     res.status(500).send({
       error: true,

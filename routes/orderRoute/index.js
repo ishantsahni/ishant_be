@@ -121,7 +121,9 @@ router.get("/", async (req, res) => {
     const ordersWithProductDetails = allOrders.map((order) => {
       const updatedOrderItems = order.orderItems.map((item) => ({
         ...item.toObject(),
-        productDetails: productMap[item.product] || null,
+        productDetails:
+          { ...productMap[item.product], quantity: item.toObject().quantity } ||
+          null,
       }));
 
       return {

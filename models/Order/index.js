@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const orderSchema = new Schema(
   {
+    razorpayOrderId: { type: String, required: true },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -36,14 +37,18 @@ const orderSchema = new Schema(
         required: true,
       },
     },
-    paymentMethod: {
-      type: String,
-      default: "Online transaction",
+    amount: {
+      type: Number,
       required: true,
     },
-    isPaid: {
-      type: Boolean,
-      default: true,
+    currency: {
+      type: String,
+      default: "INR",
+    },
+    status: {
+      type: String,
+      enum: ["pending", "paid", "expired"],
+      default: "pending",
     },
     isDelivered: {
       type: Boolean,

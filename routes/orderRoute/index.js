@@ -3,6 +3,7 @@ const Order = require("../../models/Order");
 const Product = require("../../models/Product");
 const User = require("../../models/User");
 const jwt = require("jsonwebtoken");
+const razorpayInstance = require("../../config/razorpay");
 
 const router = express.Router();
 
@@ -13,7 +14,7 @@ router.post("/add", async (req, res) => {
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
     const userId = decodedToken.userId;
 
-    const { orderDetails } = req.body;
+    const { orderDetails, amount } = req.body;
 
     // Fetch user's shipping address from the User collection
     const user = await User.findById(userId);
@@ -60,12 +61,22 @@ router.post("/add", async (req, res) => {
       });
     }
 
+    // Create order in razorpay
+    const options = {
+      amount: amount * 100, // Amount in paise
+      currency: "INR",
+      receipt: `receipt_${Date.now()}`,
+    };
+
+    const razorpayOrder = await razorpayInstance.orders.create(options);
+
     // Create a new order with default payment method and user's shipping address
     const order = new Order({
+      razorpayOrderId: razorpayOrder.id,
       user: userId,
       orderItems,
       shippingAddress,
-      paymentMethod: "Online Transaction",
+      amount,
     });
 
     // Save the order to the database
@@ -86,6 +97,39 @@ router.post("/add", async (req, res) => {
       error: true,
       message: error.message,
     });
+  }
+});
+
+router.post("/verify-payment", async (req, res) => {
+  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
+    req.body;
+
+  console.log("Order ID:", razorpay_order_id);
+  console.log("Payment ID:", razorpay_payment_id);
+  console.log("Signature:", razorpay_signature);
+
+  try {
+    // Verify payment using signature
+    const generatedSignature = crypto
+      .createHmac("sha256", process.env.RAZORPAY_SECRET)
+      .update(`${razorpay_order_id}|${razorpay_payment_id}`)
+      .digest("hex");
+
+    if (generatedSignature === razorpay_signature) {
+      await Order.findOneAndUpdate(
+        { razorpayOrderId: razorpay_order_id },
+        { status: "paid" }
+      );
+
+      res.json({ success: true, message: "Payment verified successfully!" });
+    } else {
+      res.status(400).json({
+        success: false,
+        message: "Invalid payment signature",
+      });
+    }
+  } catch (error) {
+    res.status(500).send({ error: "Error verifying payment" });
   }
 });
 

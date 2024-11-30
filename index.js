@@ -13,7 +13,6 @@ const productRoute = require("./routes/productRoute");
 const signUpRoute = require("./routes/singUpRoute");
 const signInRoute = require("./routes/signInRoute");
 const orderRoute = require("./routes/orderRoute");
-const paymentRoute = require("./routes/paymentRoute");
 const verifyToken = require("./middleware/authMiddleware");
 
 mongoose.set("strictQuery", true);

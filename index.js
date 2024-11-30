@@ -53,8 +53,6 @@ const startServer = async () => {
 
   app.use("/order", verifyToken, orderRoute);
 
-  app.use("/payment", verifyToken, paymentRoute);
-
   // Upload endpoint
   app.use("/upload", verifyToken, upload.single("file"), (req, res) => {
     if (!req.file) {

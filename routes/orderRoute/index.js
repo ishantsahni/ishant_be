@@ -105,25 +105,12 @@ router.post("/verify-payment", async (req, res) => {
   const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
     req.body;
 
-  console.log("Order ID:", razorpay_order_id);
-  console.log("Payment ID:", razorpay_payment_id);
-  console.log("Signature:", razorpay_signature);
-  console.log("Razorpay Secret ", process.env.RAZORPAY_SECRET);
-
   try {
     // Verify payment using signature
-    console.log("coming here ");
     const generatedSignature = crypto
       .createHmac("sha256", process.env.RAZORPAY_SECRET)
       .update(`${razorpay_order_id}|${razorpay_payment_id}`)
       .digest("hex");
-
-    console.log("Generated Signature:", generatedSignature);
-    console.log("Received Signature:", razorpay_signature);
-    console.log(
-      "Signature comparison ",
-      generatedSignature === razorpay_signature
-    );
 
     if (generatedSignature === razorpay_signature) {
       await Order.findOneAndUpdate(

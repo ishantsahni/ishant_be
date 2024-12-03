@@ -47,4 +47,25 @@ router.post("/addReview", async (req, res) => {
   }
 });
 
+router.post("/getReviews", async (req, res) => {
+  const { productId } = req.body;
+
+  try {
+    const reviews = await Review.find({ product: productId }).populate(
+      "user",
+      "name email"
+    );
+    if (!reviews.length) {
+      return res
+        .status(404)
+        .json({ message: "No reviews found for this product!" });
+    }
+    return res.status(200).json({ reviews });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Failed to fetch reviews", error: error.message });
+  }
+});
+
 module.exports = router;

@@ -13,6 +13,7 @@ const productRoute = require("./routes/productRoute");
 const signUpRoute = require("./routes/singUpRoute");
 const signInRoute = require("./routes/signInRoute");
 const orderRoute = require("./routes/orderRoute");
+const reviewRoute = require("../routes/reviewRoute");
 const verifyToken = require("./middleware/authMiddleware");
 
 mongoose.set("strictQuery", true);
@@ -51,6 +52,8 @@ const startServer = async () => {
   app.use("/product", verifyToken, productRoute);
 
   app.use("/order", verifyToken, orderRoute);
+
+  app.use("/reviews", verifyToken, reviewRoute);
 
   // Upload endpoint
   app.use("/upload", verifyToken, upload.single("file"), (req, res) => {

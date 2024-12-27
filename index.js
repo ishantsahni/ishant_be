@@ -18,7 +18,7 @@ const verifyToken = require("./middleware/authMiddleware");
 
 mongoose.set("strictQuery", true);
 
-const allowedOrigins = ["http:localhost:3001"];
+// const allowedOrigins = ["http:localhost:3001"];
 
 const app = express();
 

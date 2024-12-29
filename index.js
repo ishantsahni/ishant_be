@@ -10,10 +10,10 @@ const multer = require("multer");
 const multerS3 = require("multer-s3");
 const path = require("path");
 const productRoute = require("./routes/productRoute");
-const signUpRoute = require("./routes/singUpRoute");
 const signInRoute = require("./routes/signInRoute");
 const orderRoute = require("./routes/orderRoute");
 const reviewRoute = require("./routes/reviewRoute");
+const signUpRoute = require("./routes/singUpRoute");
 const verifyToken = require("./middleware/authMiddleware");
 
 mongoose.set("strictQuery", true);

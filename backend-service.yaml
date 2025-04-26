@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+spec:
+  type: NodePort
+  selector:
+    app: backend
+  ports:
+    - protocol: TCP
+      port: 4000
+      targetPort: 4000
+      nodePort: 30002
+
+#  the below is a correct explanaton about the difference between port, 
+#  targetPort and nodePort, and i have taken confirmation from chatgpt
+
+#  ok so the thing that while writing the backend yaml file, we specify 
+# the port on the container where that particular container will 
+# listen to. next, in the service yaml file, the targetport is the
+#  same pode that we have configured in the deployment yaml file, 
+#  then node port is the node where when frontend will hit the backend,
+#   so backend service will be listening on that particular node, 
+#   now when pods try to access this backend service then this port
+#    is the port where pods will connect to the service
